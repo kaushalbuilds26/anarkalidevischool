@@ -1563,8 +1563,8 @@
               <div class="value">Co-Educational</div>
             </div>
             <div class="info-item">
-<div class="label">Admission Opens</div>
-<div class="value">1 April Every Year</div>
+              <div class="label">Admission Opens</div>
+              <div class="value">1 April Every Year</div>
             </div>
             <div class="info-item">
               <div class="label">Setting</div>
@@ -1734,9 +1734,9 @@
       </div>
       <div class="gallery-grid">
         <!-- SWAP each div with <div class="gallery-item"><img src="photo.jpg" ...></div> -->
-<div class="gallery-item wide reveal">
-  <img src="images/banner.jpg" alt="School Admission Banner" style="width:100%;height:100%;object-fit:cover;">
-</div>
+        <div class="gallery-item wide reveal">
+          <img src="images/banner.jpg" alt="School Admission Banner" style="width:100%;height:100%;object-fit:cover;">
+        </div>
         <div class="gallery-item reveal reveal-delay-1"><span>📚</span>
           <p>Classroom</p>
         </div>
@@ -1930,7 +1930,8 @@
             </div>
             <div class="form-group">
               <label>Phone Number</label>
-              <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" />
+              <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" maxlength="13"
+                oninput="this.value=this.value.replace(/[^0-9+\s]/g,'')" />
             </div>
           </div>
           <div class="form-group">
@@ -2068,7 +2069,20 @@
         return;
       }
 
-      // ✅ SWAP: replace with school's WhatsApp number (no + or spaces)
+      // Phone validation — 10 digits only
+      const phoneDigits = phone.replace(/\D/g, ''); // strip spaces, dashes, +91 etc
+      if (phoneDigits.length < 10) {
+        alert('कृपया सही फोन नंबर डालें।\nPlease enter a valid 10-digit phone number.');
+        document.getElementById('phone').focus();
+        return;
+      }
+      if (phoneDigits.length > 10 && phoneDigits.length !== 12) {
+        // allow 10 digits OR 12 digits with 91 prefix (91XXXXXXXXXX)
+        alert('Phone number must be 10 digits.\nउदाहरण: 9457321765');
+        document.getElementById('phone').focus();
+        return;
+      }
+
       const schoolWhatsApp = '919458805955';
 
       const waMsg = encodeURIComponent(
